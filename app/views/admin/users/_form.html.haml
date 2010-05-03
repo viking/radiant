@@ -1,14 +1,14 @@
 - form_for [:admin, @user] do |f|
   = hidden_field 'user', 'lock_version'
-  = render_region :form_top
+  = render_region :form_top, :locals => {:f => f}
   %table.fieldset{:cellpadding=>0, :cellspacing=>0, :border=>0}
-    - render_region :form do |form|
+    - render_region :form, :locals => { :f => f } do |form|
       - form.edit_name do
         %tr
           %th.label
             = f.label :name
           %td.field
-            = f.text_field "name", :class => 'textbox', :maxlength => 100 
+            = f.text_field "name", :class => 'textbox', :maxlength => 100
           %td.help Required.
       - form.edit_email do
         %tr
@@ -23,7 +23,7 @@
           %th.label
             = f.label :login, 'Username'
           %td.field
-            = f.text_field "login", :class => 'textbox', :maxlength => 40 
+            = f.text_field "login", :class => 'textbox', :maxlength => 40
           %td.help
             At least 3 characters. Must be unique.
       - form.edit_password do
@@ -59,16 +59,16 @@
           %th.label
             = f.label :notes, "Notes", :class => 'optional'
           %td.field
-            ~ f.text_area "notes", :size => '40x4', :class => "textarea" 
+            ~ f.text_area "notes", :size => '40x4', :class => "textarea"
           %td.help
             Optional.
-  - render_region :form_bottom do |form_bottom|
+  - render_region :form_bottom, :locals => {:f => f} do |form_bottom|
     - form_bottom.edit_timestamp do
-      = updated_stamp @user  
+      = updated_stamp @user
     - form_bottom.edit_buttons do
       %p.buttons
         = save_model_button(@user)
         = save_model_and_continue_editing_button(@user)
-        or 
+        or
         = link_to "Cancel", admin_users_path
-          
+
